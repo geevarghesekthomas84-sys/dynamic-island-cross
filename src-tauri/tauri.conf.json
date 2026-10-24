@@ -29,12 +29,18 @@
     ],
     "security": {
       "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; connect-src 'self' ipc: http://ipc.localhost"
-    }
+    },
+    "macOSPrivateApi": true
   },
   "bundle": {
     "active": true,
     "targets": [
-      "nsis"
+      "nsis",
+      "dmg",
+      "app",
+      "deb",
+      "rpm",
+      "appimage"
     ],
     "publisher": "Dynamic Island",
     "shortDescription": "A Dynamic Island for your desktop",
@@ -49,6 +55,8 @@
       "nsis": {
         "installMode": "currentUser"
       }
-    }
+    },
+    "category": "Utility",
+    "longDescription": "A Dynamic Island for your desktop: now playing, notifications, volume, charging and system status in a floating pill."
   }
 }
