@@ -161,14 +161,21 @@ const restingActivity = (): Activity => (useIslandStore.getState().media.playing
 
 let dismissTimer: ReturnType<typeof setTimeout> | undefined;
 
-/** Closes a notification after a few seconds, but never while the pointer is on the island. */
+/**
+ * Closes a notification after its time. If the pointer is on the island at that moment it gets one
+ * short extension (to finish reading or reach a button), then it closes regardless.
+ */
+const NOTIFICATION_GRACE_MS = 3000;
+
 function scheduleDismiss(id: number) {
   clearTimeout(dismissTimer);
+  let extended = false;
   dismissTimer = setTimeout(function check() {
     const s = useIslandStore.getState();
     if (s.notification?.id !== id) return;
-    if (s.hovered) {
-      dismissTimer = setTimeout(check, 2000);
+    if (s.hovered && !extended) {
+      extended = true;
+      dismissTimer = setTimeout(check, NOTIFICATION_GRACE_MS);
       return;
     }
     s.dismissNotification();

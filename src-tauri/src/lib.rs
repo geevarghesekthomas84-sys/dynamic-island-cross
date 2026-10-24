@@ -381,6 +381,12 @@ fn set_island_size(window: tauri::WebviewWindow, state: State<AppState>, width: 
 pub fn run() {
     let sys = System::new_all();
     tauri::Builder::default()
+        // Must be registered first. A second launch exits and just brings the running island back.
+        .plugin(tauri_plugin_single_instance::init(|app, _args, _cwd| {
+            if let Some(window) = app.get_webview_window("island") {
+                let _ = window.show();
+            }
+        }))
         .plugin(tauri_plugin_global_shortcut::Builder::new().build())
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,

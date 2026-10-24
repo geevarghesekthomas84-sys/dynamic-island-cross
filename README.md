@@ -8,6 +8,7 @@
 A small floating pill that grows to show what is playing, new notifications, volume, charging and system status.
 
 [![Release](https://img.shields.io/github/v/release/geevarghesekthomas84-sys/dynamic-island-cross?style=flat-square&color=7c3aed)](../../releases/latest)
+[![License](https://img.shields.io/badge/license-MIT-16a34a?style=flat-square)](LICENSE)
 [![Platforms](https://img.shields.io/badge/platforms-Windows%20%C2%B7%20macOS%20%C2%B7%20Linux-2563eb?style=flat-square)](#install)
 [![Built with](https://img.shields.io/badge/built%20with-Tauri%20%C2%B7%20Rust%20%C2%B7%20React-0f172a?style=flat-square)](#build-from-source)
 
@@ -161,3 +162,7 @@ src-tauri/src/       Rust: media, notifications, volume, power, privacy, window 
 .github/workflows/   Cross-platform installer build
 docs/screenshots/    Images used in this README
 ```
+
+## License
+
+[MIT](LICENSE). Use it, change it and share it; keep the copyright notice.
