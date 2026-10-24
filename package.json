@@ -2,7 +2,7 @@
   "name": "dynamic-island-cross",
   "private": true,
   "license": "MIT",
-  "version": "0.1.0",
+  "version": "1.6.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
