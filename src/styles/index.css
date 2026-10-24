@@ -1,0 +1,219 @@
+@import "tailwindcss";
+
+:root {
+  --accent: #4cc9f0;
+  --glow: 0.5;
+}
+
+[data-theme="dark"] {
+  --island: #000000;
+  --fg: #ffffff;
+  --fg2: rgba(255, 255, 255, 0.62);
+  --fg3: rgba(255, 255, 255, 0.38);
+  --line: rgba(255, 255, 255, 0.1);
+  --raised: rgba(255, 255, 255, 0.09);
+  --raised-hi: rgba(255, 255, 255, 0.16);
+  --ind-hi: #ffffff;
+  --ind-lo: #a9b4c4;
+}
+
+[data-theme="light"] {
+  --island: #f7f7f9;
+  --fg: #101114;
+  --fg2: rgba(16, 17, 20, 0.62);
+  --fg3: rgba(16, 17, 20, 0.4);
+  --line: rgba(0, 0, 0, 0.1);
+  --raised: rgba(0, 0, 0, 0.06);
+  --raised-hi: rgba(0, 0, 0, 0.12);
+  --ind-hi: #1c212b;
+  --ind-lo: #6b7686;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: transparent;
+  overflow: hidden;
+}
+
+[data-view="settings"] * {
+  scrollbar-width: none;
+}
+
+[data-view="settings"] *::-webkit-scrollbar {
+  display: none;
+}
+
+[data-view="settings"] body {
+  background: var(--island);
+  user-select: text;
+}
+
+body {
+  font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
+  font-feature-settings: "tnum" 1, "cv05" 1, "cv11" 1;
+  -webkit-font-smoothing: antialiased;
+  color: var(--fg);
+  user-select: none;
+  cursor: default;
+}
+
+.island {
+  background: var(--island);
+  box-shadow:
+    0 0 0 1px var(--line),
+    0 4px 12px -4px rgba(0, 0, 0, 0.5),
+    0 0 calc(var(--glow) * 12px) 0 color-mix(in srgb, var(--accent) calc(var(--glow) * 45%), transparent);
+  will-change: width, height;
+}
+
+@keyframes wave {
+  from {
+    transform: scaleY(0.2);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.wave i {
+  display: block;
+  width: 3px;
+  height: 100%;
+  border-radius: 99px;
+  background: currentColor;
+  transform-origin: center;
+  animation: wave 0.8s ease-in-out infinite alternate;
+}
+
+.wave[data-paused="true"] i {
+  animation-play-state: paused;
+  transform: scaleY(0.2);
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.35;
+  }
+}
+
+.pulse-dot {
+  animation: pulse-dot 1.6s ease-in-out infinite;
+}
+
+[data-reduced="true"] *,
+[data-reduced="true"] *::before,
+[data-reduced="true"] *::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wave i,
+  .pulse-dot {
+    animation: none !important;
+  }
+}
+
+/* ── Center indicator ─────────────────────────────────────────── */
+.ind {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 16px;
+}
+
+.ind i {
+  display: block;
+  width: 3px;
+  height: 16px;
+  border-radius: 99px;
+  background: linear-gradient(180deg, var(--ind-hi), var(--ind-lo));
+  opacity: 0.6;
+  transform: scaleY(var(--h));
+  transform-origin: center;
+  transition:
+    transform 0.5s cubic-bezier(0.3, 0.7, 0.3, 1),
+    opacity 0.5s ease;
+  will-change: transform, opacity;
+}
+
+.ind[data-state="playing"] i {
+  opacity: 0.95;
+  background: linear-gradient(
+    180deg,
+    var(--ind-hi),
+    color-mix(in srgb, var(--accent) 40%, var(--ind-lo))
+  );
+  animation: ind-bounce var(--d) ease-in-out var(--delay) infinite alternate;
+}
+
+.ind[data-state="busy"] i {
+  opacity: 0.3;
+  animation: ind-sweep 1.4s ease-in-out var(--delay) infinite;
+}
+
+@keyframes ind-bounce {
+  from {
+    transform: scaleY(var(--lo));
+  }
+  to {
+    transform: scaleY(var(--hi));
+  }
+}
+
+@keyframes ind-sweep {
+  0%,
+  100% {
+    opacity: 0.28;
+  }
+  50% {
+    opacity: 0.95;
+  }
+}
+
+/* ── Charging ─────────────────────────────────────────────────── */
+@keyframes charge-pulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.4;
+  }
+  100% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+}
+
+.charge-pulse {
+  background: rgba(52, 211, 153, 0.35);
+  animation: charge-pulse 1.8s cubic-bezier(0.2, 0.6, 0.3, 1) infinite;
+}
+
+@keyframes charge-flow {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(220%);
+  }
+}
+
+.charge-flow {
+  overflow: hidden;
+}
+
+.charge-flow::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 45%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: charge-flow 1.6s linear infinite;
+}
