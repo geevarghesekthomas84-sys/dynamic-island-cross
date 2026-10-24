@@ -143,6 +143,32 @@ Wayland.
 Calls, file transfers, screen recording, navigation and the AI panel are shown with **sample data** only and are not
 connected to anything yet.
 
+**What has been tested:** the Windows installer from each release has been installed and run on Windows 11, covering
+the island, settings, volume, notifications, the global shortcut, the single-instance guard and uninstalling. The
+macOS and Linux installers are built by GitHub but have not been run on real machines.
+
+## Changelog
+
+**1.6.0**
+- Opening the app a second time no longer creates a second island; it brings the running one back.
+- Notifications close on time even when the pointer is resting on the island (one 3-second grace period).
+- MIT license, new README and screenshots.
+
+**1.5.0**
+- First public release for Windows, macOS and Linux: now playing with artwork and controls, system notifications,
+  system volume, charging animations, microphone and camera indicators, timers, settings window, tray menu,
+  auto-hide, hide in fullscreen apps and a global shortcut.
+
+## Roadmap
+
+- Now playing on macOS (system media API) and Linux (MPRIS).
+- Notifications, volume and charging detection on macOS and Linux.
+- Code-signed installers, so SmartScreen and Gatekeeper stop warning.
+- Real data for calls, file transfers, screen recording, navigation and the AI panel, which are sample data today.
+- Testing on real macOS and Linux machines.
+
+Ideas and bug reports are welcome in [Issues](../../issues).
+
 ## Build from source
 
 You need Node.js 22+, Rust (stable) and the [Tauri prerequisites](https://v2.tauri.app/start/prerequisites/).
